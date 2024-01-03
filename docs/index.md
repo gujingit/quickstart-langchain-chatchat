@@ -32,12 +32,21 @@ Langchain-chatchat由Nginx、Chat及LLM组成。
 | 数据库类型        | 向量数据库类型。取值：faiss or adb。                                                      | faiss              |
 | 应用登陆名        | Nginx登陆名称                                                                     | admin              |
 | 应用登陆密码       | Nginx登陆密码                                                                     | 无                  |
+| 应用白名单        | 可以访问应用的IP或者CIDR网段。                                                            | 127.0.0.1          |
 | 模型名称         | llm模型名称                                                                       | qwen-7b-chat-aiacc |
 | 是否使用量化(8bit) | llm模型int8量化                                                                   | true               |
 | 模型PVC        | 模型存储PVC，挂载到容器内/llm-model目录                                                    | true               |
 | 知识库PVC       | 已存在的PVC，用于保存本地知识库文件。如使用                                                       | 无                  |
 | 实例类型         | 模型推理服务部署方式，取值：ecs or eci。ecs将应用部署到ECS节点上。eci将部署到ECI上（ACK Serverless集群请使用eci）。 | ecs                |
 
+### 修改应用白名单
+应用白名单默认值为127.0.0.1，您可以通过以下方式修改。
+#### 新建服务
+创建服务时可以指定应用白名单参数，建议添加本机公网出口地址（可通过浏览器访问ifconfig.me、myip.ipip.net获取），否则本机将无法访问服务。
+
+#### 已有服务
+如果服务已经创建，可以在服务概览页面 > 实例信息点击SLBACL链接进行修改。SLBACL配置可参考[访问控制](https://help.aliyun.com/zh/slb/classic-load-balancer/user-guide/overview-3)。
+![slbacl](slbacl.jpg "slbacl")
 ### 向量数据库
 
 #### faiss
